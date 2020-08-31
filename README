@@ -17,9 +17,35 @@ example configration
 https://inst.eecs.berkeley.edu/~cs152/sp18/handouts/lab2-1.0.pdf
 
 Orighial branch
-inst$ git clone https://github.com/donggyukim/cacti.git
-inst$ cd cacti
-inst$ make
+git clone https://github.com/donggyukim/cacti.git
+cd cacti
+make
+
+
+Rocket core Configration Location 
+src/main/scala/tile/L1Cache.scala
+Defination is in the following link
+src/main/scala/subsystem/Configs.scala
+Parametter : 
+   dcache = Some(DCacheParams(
+        rowBits = site(SystemBusKey).beatBits,
+        nSets = 64,
+        nWays = 1,
+        nTLBSets = 1,
+        nTLBWays = 4,
+        nMSHRs = 0,
+        blockBytes = site(CacheBlockBytes))),
+      icache = Some(ICacheParams(
+        rowBits = site(SystemBusKey).beatBits,
+        nSets = 64,
+        nWays = 1,
+        nTLBSets = 1,
+        nTLBWays = 4,
+        blockBytes = site(CacheBlockBytes))))
+    List.tabulate(n)(i => med.copy(hartId = i + idOffset)) ++ prev
+
+NSets and NWays defined in BaseConfig. You can change those numbers to get a Rocket core with different cache parameters. For example, by changing L1I, NWays to 4, you will get a 32KB 4-way set-associative L1 instruction cache rather than a 16KB 2-way set-associative L1 instruction cache.
+
 
 
 A Tool to Model Caches/Memories, 3D stacking, and off-chip IO
