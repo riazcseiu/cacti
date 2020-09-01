@@ -22,6 +22,9 @@ cd cacti
 make
 
 ============for RISC-V Rocket core==============================
+
+case object CacheBlockBytes extends Field[Int](64)
+
 Rocket core Configration Location 
 src/main/scala/tile/L1Cache.scala
 Defination is in the following link
@@ -46,6 +49,24 @@ Parametter :
     List.tabulate(n)(i => med.copy(hartId = i + idOffset)) ++ prev
 
 NSets and NWays defined in BaseConfig. You can change those numbers to get a Rocket core with different cache parameters. For example, by changing L1I, NWays to 4, you will get a 32KB 4-way set-associative L1 instruction cache rather than a 16KB 2-way set-associative L1 instruction cache.
+
+
+
+but check this line where it's defined as 64 bytes. As an example, the configuration of L1 for TinyCore (If I'm right) it's:
+D$ cache size = 256 nSets * 1 nWays * 64 CacheBlockbytes = 16384 Bytes = 16 KiB
+I$ cache size = 64 nSets * 1 nWays * 64 CacheBlockbytes = 4096 Bytes = 4 KiB
+...using the image below (different cfg) we can say that by default we have block size equals to 512-bit (64*8) instead of 32-bit like image.
+screenshot from 2018-11-15 14-30-45
+
+https://github.com/chipsalliance/rocket-chip/issues/1352#issuecomment-439112633
+
+
+
+
+
+
+
+
 
 
 
